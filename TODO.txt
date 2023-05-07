@@ -1,0 +1,3 @@
+- setup firestore backend
+
+- somethign wonky with the form inputs right now, theyre overflowing off of the container [maybe because i set the form to be w-25??]
