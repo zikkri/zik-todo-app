@@ -4,12 +4,15 @@
   <div class="row">
     <div class="card shadow m-3 p-3 border border-black rounded">
       <!-- PUT RELEVANT STUFF IN HERE -->
-      <form>
+      <form #form="ngForm" (ngSubmit)="signin(form)">
         <label>Email:</label>
         <br />
         <input
           type="text"
           class="mt-2 text-center border border-black rounded"
+          name="email"
+          ngModel
+          required
         />
         <br />
 
@@ -18,14 +21,24 @@
         <input
           type="password"
           class="mt-2 text-center border border-black rounded"
+          name="password"
+          ngModel
+          required
         />
         <br />
         <br />
-        <button class="btn btn-primary border border-black">Signin</button>
+        <button type="submit" class="btn btn-primary border border-black">
+          Signin
+        </button>
         <br />
         <label class="mt-2">Don't have an account?</label>
         <br />
-        <button class="btn btn-success mt-2 border border-black">Signup</button>
+        <button
+          class="btn btn-success mt-2 border border-black"
+          routerLink="/signup"
+        >
+          Signup
+        </button>
       </form>
     </div>
   </div>
