@@ -1,3 +1,2 @@
-- setup firestore backend
-
-- somethign wonky with the form inputs right now, theyre overflowing off of the container [maybe because i set the form to be w-25??]
+- MAKE BETTER 
+    [ALL FUNCTIONALITY SEEMS TO BE THERE - JUST NEED TO MAKE IT SO THINGS LOAD RIGHT AWAY INSTEAD OF HAVING TO CLICK BUTTONS] 

@@ -1,29 +1,36 @@
 import { Injectable } from '@angular/core';
-// import {
-//   Firestore,
-//   collection,
-//   addDoc,
-//   collectionData,
-//   doc,
-//   updateDoc,
-//   deleteDoc,
-//   getDoc,
-// } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  collectionData,
+  doc,
+  updateDoc,
+  deleteDoc,
+  getDoc,
+  where,
+} from '@angular/fire/firestore';
+
+import { getAuth } from '@angular/fire/auth';
+import { getDocs, query } from 'firebase/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserCredential, updateProfile } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  userTaskData!: any;
   constructor(
-    private firestore: AngularFirestore,
+    private firestore: Firestore,
     private router: Router,
     private auth: AngularFireAuth
   ) {}
 
+  //SIGNUP A USER
   createUser(email: string, password: string, displayName: string) {
     this.auth
       .createUserWithEmailAndPassword(email, password)
@@ -39,10 +46,12 @@ export class UserService {
     this.router.navigateByUrl('');
   }
 
+  //CREATE USERNAME FOR USER
   addUsername(userCred: any, displayName: string) {
     updateProfile(userCred.user, { displayName });
   }
 
+  //SIGNIN A USER
   signIn(email: string, password: string) {
     this.auth
       .signInWithEmailAndPassword(email, password)
@@ -60,6 +69,7 @@ export class UserService {
       });
   }
 
+  //SIGNOUT A USER
   signOut() {
     this.auth
       .signOut()
@@ -74,6 +84,44 @@ export class UserService {
 
     localStorage.clear();
     this.router.navigateByUrl('');
+  }
+
+  //ADD TASKS FOR USER
+  createTask(f: any) {
+    const tasksDB = collection(this.firestore, 'Tasks');
+
+    const authh = getAuth();
+    const user = authh.currentUser;
+
+    const newTask = {
+      task: f,
+      user: user?.uid,
+    };
+
+    addDoc(tasksDB, newTask)
+      .then(() => {
+        console.log('task created succesfully');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  //GET ALL TASKS - THEN FILTER ON THE COMPONENT SIDE
+  getTasks() {
+    const tasksDB = collection(this.firestore, 'Tasks');
+    collectionData(tasksDB, { idField: 'id' }).subscribe((data) => {
+      this.userTaskData = data;
+      // console.log(this.userTaskData);
+    });
+
+    return this.userTaskData;
+  }
+
+  //DELETE TASK
+  deleteTask(id: string) {
+    const docRef = doc(this.firestore, 'Tasks', id);
+    deleteDoc(docRef);
   }
 
   refresh(): void {

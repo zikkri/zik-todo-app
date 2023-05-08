@@ -11,6 +11,13 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from './environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+
+import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore/';
+
 @NgModule({
   declarations: [AppComponent, SigninComponent, SignupComponent, ListComponent],
   imports: [
@@ -18,7 +25,10 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
+    AngularFirestoreModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent],

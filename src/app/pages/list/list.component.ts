@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { getAuth } from 'firebase/auth';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -6,12 +7,20 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
   public username? = localStorage.getItem('username');
+  public taskArr?: any;
+  public length: number = 0;
 
-  public testing: string[] = [];
+  constructor(private userService: UserService) {
+    this.getUsersTasks();
+  }
 
-  constructor(private userService: UserService) {}
+  ngOnInit(): void {
+    this.getUsersTasks().then((data) => {
+      this.taskArr = data;
+    });
+  }
 
   //NEED TO ADD EVERY TASK TO BACKEND DB
 
@@ -20,11 +29,28 @@ export class ListComponent {
   }
 
   addItem(f: any) {
-    this.testing.push(f.value.task);
+    const item = f.value.task;
+    this.userService.createTask(item);
     f.reset();
   }
 
-  removeItem() {
-    this.testing.pop();
+  async getUsersTasks() {
+    const arr: any = await this.userService.getTasks();
+    // console.log(arr);
+    const authh = getAuth();
+    const user = authh.currentUser;
+
+    const ttt = arr?.filter(function (obj: any) {
+      return obj.user == user?.uid;
+    });
+
+    // console.log(ttt);
+    this.taskArr = ttt;
+    // console.log(this.userTournyData);
+    this.length = this.taskArr.length;
+  }
+
+  removeItem(id: string) {
+    this.userService.deleteTask(id);
   }
 }
