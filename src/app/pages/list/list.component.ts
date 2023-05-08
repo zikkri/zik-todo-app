@@ -9,11 +9,22 @@ import { UserService } from 'src/app/services/user.service';
 export class ListComponent {
   public username? = localStorage.getItem('username');
 
-  public testing: string[] = ['zzzz', 'ssss', 'rrrrr', 'ttttt'];
+  public testing: string[] = [];
 
   constructor(private userService: UserService) {}
 
+  //NEED TO ADD EVERY TASK TO BACKEND DB
+
   signOut() {
     return this.userService.signOut();
+  }
+
+  addItem(f: any) {
+    this.testing.push(f.value.task);
+    f.reset();
+  }
+
+  removeItem() {
+    this.testing.pop();
   }
 }

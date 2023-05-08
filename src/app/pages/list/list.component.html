@@ -6,22 +6,25 @@
   </div>
   <div class="container mt-3">
     <div class="row">
-      <div class="card shadow p-4 d-flex algin-items-end">
-        <div class="col">
-          <label>Enter a new task:</label>
-          <input type="text" class="mt-2" />
+      <form #form="ngForm"
+      (ngSubmit)="addItem(form)">
+        <div class="card shadow p-4 d-flex algin-items-end">
+          <div class="col">
+            <label>Enter a new task:</label>
+            <input type="text" class="mt-2" ngModel name="task" />
+          </div>
+          <div class="col-auto pt-2">
+            <button class="btn btn-primary border border-black">Add</button>
+          </div>
         </div>
-        <div class="col-auto pt-2">
-          <button class="btn btn-primary border border-black">Add</button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
   <div class="container">
     <div class="row mt-3" *ngFor="let item of testing; let i = index">
       <div class="card shadow p-3">
         <label class="py-2">{{ testing[i] }}</label>
-        <button class="col btn btn-primary border border-black float-right">
+        <button (click)="removeItem()" class="col btn btn-primary border border-black float-right">
           X
         </button>
       </div>
