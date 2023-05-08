@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class ListComponent {
   public username: string = 'Zack';
+
+  public testing: string[] = ['zzzz', 'ssss', 'rrrrr', 'ttttt'];
 }
