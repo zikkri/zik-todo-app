@@ -34,7 +34,7 @@ export class ListComponent implements OnInit {
   constructor(private userService: UserService, private firestore: Firestore) {}
 
   ngOnInit(): void {
-    console.log('trying to work oninit');
+    // console.log('trying to work oninit');
 
     this.getUsersTasks();
   }
@@ -51,7 +51,7 @@ export class ListComponent implements OnInit {
       this.userService.createTask(item);
       f.reset();
       this.getUsersTasks();
-      console.log(item);
+      // console.log(item);
     } else {
       window.alert('Entries cannot be empty, please try again.');
     }
@@ -76,7 +76,7 @@ export class ListComponent implements OnInit {
 
     this.taskArr = users;
 
-    console.log(this.taskArr);
+    // console.log(this.taskArr);
   }
 
   removeItem(id: string) {

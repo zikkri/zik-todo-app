@@ -38,7 +38,7 @@ export class UserService {
       .createUserWithEmailAndPassword(email, password)
       .then((userCred) => {
         this.addUsername(userCred, displayName);
-        console.log('user added');
+        // console.log('user added');
       })
       .catch((error) => {
         // Handle errors
@@ -60,7 +60,7 @@ export class UserService {
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // User signed in successfully
-        console.log(userCredential);
+        // console.log(userCredential);
 
         //MAYBE ADD IN CREATE AND PASS BACK A NEW USER TO SIGNIN FUNCTION
         // Save logged in status in local storage
@@ -79,7 +79,7 @@ export class UserService {
       .signOut()
       .then(() => {
         // User signed out successfully
-        console.log('User signed out');
+        // console.log('User signed out');
       })
       .catch((error) => {
         // Handle errors
@@ -105,10 +105,10 @@ export class UserService {
 
     addDoc(tasksDB, newTask)
       .then(() => {
-        console.log('task created succesfully');
+        // console.log('task created succesfully');
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }
 
