@@ -25,14 +25,17 @@
         </div>
       </form>
     </div>
-    <div class="row mt-3 mx-1" *ngFor="let item of taskArr; let i = index">
+    <div
+      class="row d-flex justify-content-center mt-3 mx-1"
+      *ngFor="let item of taskArr; let i = index"
+    >
       <div class="card shadow p-3">
-        <label class="py-2">{{ taskArr[i].task }}</label>
+        <label class="col py-2">{{ taskArr[i].task }}</label>
         <button
           (click)="removeItem(taskArr[i].id)"
           class="col btn btn-primary border border-black float-right"
         >
-          X
+          <fa-icon [icon]="faTrashCan"></fa-icon>
         </button>
       </div>
     </div>

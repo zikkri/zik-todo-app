@@ -17,6 +17,7 @@ import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore/';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [AppComponent, SigninComponent, SignupComponent, ListComponent],
@@ -29,6 +30,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore/';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

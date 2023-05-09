@@ -16,6 +16,7 @@ import {
   getDocs,
   orderBy,
 } from '@angular/fire/firestore';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-list',
@@ -28,6 +29,7 @@ export class ListComponent implements OnInit {
   public length: number = 0;
 
   private user: User = new User();
+  faTrashCan = faTrashCan;
 
   constructor(private userService: UserService, private firestore: Firestore) {}
 
@@ -45,9 +47,14 @@ export class ListComponent implements OnInit {
 
   addItem(f: any) {
     const item = f.value.task;
-    this.userService.createTask(item);
-    f.reset();
-    this.getUsersTasks();
+    if (item) {
+      this.userService.createTask(item);
+      f.reset();
+      this.getUsersTasks();
+      console.log(item);
+    } else {
+      window.alert('Entries cannot be empty, please try again.');
+    }
   }
 
   async getUsersTasks() {

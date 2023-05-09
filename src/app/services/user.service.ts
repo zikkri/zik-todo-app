@@ -68,7 +68,7 @@ export class UserService {
         this.router.navigateByUrl('/list');
       })
       .catch((error) => {
-        // Handle errors
+        window.alert('Invalid login details, please try again.');
         console.error(error);
       });
   }
