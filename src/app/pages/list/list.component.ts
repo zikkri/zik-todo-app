@@ -2,6 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { getAuth } from 'firebase/auth';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  collectionData,
+  doc,
+  updateDoc,
+  deleteDoc,
+  getDoc,
+  where,
+  query,
+  getDocs,
+  orderBy,
+} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-list',
@@ -15,14 +29,12 @@ export class ListComponent implements OnInit {
 
   private user: User = new User();
 
-  constructor(private userService: UserService) {
-    this.getUsersTasks();
-  }
+  constructor(private userService: UserService, private firestore: Firestore) {}
 
   ngOnInit(): void {
-    this.getUsersTasks().then((data) => {
-      this.taskArr = data;
-    });
+    console.log('trying to work oninit');
+
+    this.getUsersTasks();
   }
 
   //NEED TO ADD EVERY TASK TO BACKEND DB
@@ -35,25 +47,34 @@ export class ListComponent implements OnInit {
     const item = f.value.task;
     this.userService.createTask(item);
     f.reset();
+    this.getUsersTasks();
   }
 
   async getUsersTasks() {
-    const arr: any = await this.userService.getTasks();
-    // console.log(arr);
-    const authh = getAuth();
-    const user = authh.currentUser;
+    const userID = localStorage.getItem('userID');
 
-    const ttt = arr?.filter(function (obj: any) {
-      return obj.user == user?.uid;
-    });
+    const q = query(
+      collection(this.firestore, 'Tasks'),
+      where('user', '==', userID),
+      orderBy('date', 'desc')
+    );
 
-    // console.log(ttt);
-    this.taskArr = ttt;
-    // console.log(this.userTournyData);
-    this.length = this.taskArr.length;
+    const querySnapshot = await getDocs(q);
+
+    const users = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+
+      ...doc.data(),
+    }));
+
+    this.taskArr = users;
+
+    console.log(this.taskArr);
   }
 
   removeItem(id: string) {
-    this.userService.deleteTask(id);
+    const docRef = doc(this.firestore, 'Tasks', id);
+    deleteDoc(docRef);
+    this.ngOnInit();
   }
 }

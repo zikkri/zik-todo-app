@@ -61,7 +61,6 @@ export class UserService {
         // User signed in successfully
         console.log(userCredential);
 
-
         //MAYBE ADD IN CREATE AND PASS BACK A NEW USER TO SIGNIN FUNCTION
         // Save logged in status in local storage
         localStorage.setItem('loggedIn', 'true');
@@ -100,6 +99,7 @@ export class UserService {
     const newTask = {
       task: f,
       user: user?.uid,
+      date: Date.now(),
     };
 
     addDoc(tasksDB, newTask)
