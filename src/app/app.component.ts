@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent implements OnInit {
   title = 'zik-todo-app';
   loggedIn: boolean = false;
   public static userLoggedIn: any;
-  constructor(private auth: AngularFireAuth) {}
+  constructor(private auth: AngularFireAuth, private router: Router) {}
   ngOnInit(): void {
     const loggedInStatus = localStorage.getItem('loggedIn');
     if (loggedInStatus && loggedInStatus === 'true') {
@@ -25,12 +26,11 @@ export class AppComponent implements OnInit {
         const uid = user.uid;
         AppComponent.userLoggedIn = user;
         const username = user?.displayName;
-        // console.log(AppComponent.userLoggedIn);
         localStorage.setItem('userID', uid);
         if (username != null) {
           localStorage.setItem('username', username);
+          this.router.navigate(['list']);
         }
-        // console.log(uid);
       } else {
         this.loggedIn = false;
       }

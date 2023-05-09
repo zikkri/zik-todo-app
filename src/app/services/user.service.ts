@@ -51,6 +51,7 @@ export class UserService {
   //CREATE USERNAME FOR USER
   addUsername(userCred: any, displayName: string) {
     updateProfile(userCred.user, { displayName });
+    localStorage.setItem('username', displayName);
   }
 
   //SIGNIN A USER
