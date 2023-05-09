@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { getAuth } from 'firebase/auth';
+import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,6 +12,8 @@ export class ListComponent implements OnInit {
   public username? = localStorage.getItem('username');
   public taskArr?: any;
   public length: number = 0;
+
+  private user: User = new User();
 
   constructor(private userService: UserService) {
     this.getUsersTasks();

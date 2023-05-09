@@ -18,12 +18,14 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserCredential, updateProfile } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   userTaskData!: any;
+  private user: User = new User();
   constructor(
     private firestore: Firestore,
     private router: Router,
@@ -59,6 +61,8 @@ export class UserService {
         // User signed in successfully
         console.log(userCredential);
 
+
+        //MAYBE ADD IN CREATE AND PASS BACK A NEW USER TO SIGNIN FUNCTION
         // Save logged in status in local storage
         localStorage.setItem('loggedIn', 'true');
         this.router.navigateByUrl('/list');
